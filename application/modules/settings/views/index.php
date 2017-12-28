@@ -26,6 +26,9 @@
         <a data-toggle="tab" href="#settings-quotes"><?php _trans('quotes'); ?></a>
     </li>
     <li>
+        <a data-toggle="tab" href="#settings-services"><?php _trans('services'); ?></a>
+    </li>
+    <li>
         <a data-toggle="tab" href="#settings-taxes"><?php _trans('taxes'); ?></a>
     </li>
     <li>
@@ -65,6 +68,9 @@
 
             <div id="settings-quotes" class="tab-pane">
                 <?php $this->layout->load_view('settings/partial_settings_quotes'); ?>
+            </div>
+            <div id="settings-services" class="tab-pane">
+                <?php $this->layout->load_view('settings/partial_settings_services'); ?>
             </div>
 
             <div id="settings-taxes" class="tab-pane">

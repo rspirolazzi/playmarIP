@@ -61,6 +61,10 @@
             $('#modal-placeholder').load("<?php echo site_url('quotes/ajax/modal_create_quote'); ?>");
         });
 
+        $(document).on('click', '.create-service', function () {
+            $('#modal-placeholder').load("<?php echo site_url('services/ajax/modal_create_service'); ?>");
+        });
+
         $(document).on('click', '#btn_quote_to_invoice', function () {
             var quote_id = $(this).data('quote-id');
             $('#modal-placeholder').load("<?php echo site_url('quotes/ajax/modal_quote_to_invoice'); ?>/" + quote_id);

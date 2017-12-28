@@ -36,6 +36,17 @@
                         <li><?php echo anchor('quotes/index', trans('view_quotes')); ?></li>
                     </ul>
                 </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="fa fa-caret-down"></i> &nbsp;
+                        <span class="hidden-md"><?php _trans('services'); ?></span>
+                        <i class="visible-md-inline fa fa-file"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#" class="create-service"><?php _trans('create_service'); ?></a></li>
+                        <li><?php echo anchor('services/index', trans('view_services')); ?></li>
+                    </ul>
+                </li>
 
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
