@@ -7,6 +7,23 @@
         <div class="panel-body">
 
             <div class="row">
+                <div class="col-xs-12 col-md-12">
+
+                    <div class="form-group">
+                        <label for="settings[invoices_enabled]">
+                            <?php _trans('enable_invoices'); ?>
+                        </label>
+                        <select name="settings[invoices_enabled]" class="form-control simple-select" id="settings[invoices_enabled]">
+                            <option value="0">
+                                <?php _trans('no'); ?>
+                            </option>
+                            <option value="1" <?php check_select(get_setting('invoices_enabled', '1'), '1'); ?>>
+                                <?php _trans('yes'); ?>
+                            </option>
+                        </select>
+                    </div>
+
+                </div>
                 <div class="col-xs-12 col-md-6">
 
                     <div class="form-group">

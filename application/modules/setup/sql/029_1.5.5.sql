@@ -110,3 +110,5 @@ ALTER TABLE `ip_service_items`
 
   ALTER TABLE `ip_service_items`
 	CHANGE COLUMN `item_discount_amount` `item_discount_amount` DECIMAL(20,2) NULL DEFAULT '0.00' AFTER `item_price`;
+
+  INSERT INTO `ip_invoice_groups` (`invoice_group_name`, `invoice_group_identifier_format`, `invoice_group_next_id`) VALUES ('Service Default', 'SER{{{id}}}', '1');

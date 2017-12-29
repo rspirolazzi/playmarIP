@@ -65,6 +65,7 @@ class Custom_Fields extends Admin_Controller
         $this->load->model('mdl_invoice_custom');
         $this->load->model('mdl_payment_custom');
         $this->load->model('mdl_quote_custom');
+        $this->load->model('mdl_service_custom');
         $this->load->model('mdl_user_custom');
 
         $this->layout->set('custom_field_tables', $this->mdl_custom_fields->custom_tables());

@@ -343,7 +343,7 @@ $cv = $this->controller->view_data["custom_values"];
             </div>
             <div class="col-xs-12 col-md-6">
 
-                <?php $this->layout->load_view('upload/dropzone-service-html'); ?>
+                <?php //$this->layout->load_view('upload/dropzone-service-html'); ?>
 
                 <?php if ($custom_fields): ?>
                     <?php $cv = $this->controller->view_data["custom_values"]; ?>
@@ -392,4 +392,4 @@ $cv = $this->controller->view_data["custom_values"];
     </form>
 </div>
 
-<?php $this->layout->load_view('upload/dropzone-service-scripts'); ?>
+<?php //$this->layout->load_view('upload/dropzone-service-scripts'); ?>

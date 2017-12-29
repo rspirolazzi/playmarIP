@@ -19,10 +19,16 @@
                         <i class="fa fa-file fa-margin"></i>
                         <span class="hidden-xs"><?php _trans('create_quote'); ?></span>
                     </a>
+                    <a href="javascript:void(0)" class="create-service btn btn-default">
+                        <i class="fa fa-file fa-margin"></i>
+                        <span class="hidden-xs"><?php _trans('create_service'); ?></span>
+                    </a>
+                    <?php if (get_setting('invoices_enabled', '1') == 1) : ?>
                     <a href="javascript:void(0)" class="create-invoice btn btn-default">
                         <i class="fa fa-file-text fa-margin"></i>
                         <span class="hidden-xs"><?php _trans('create_invoice'); ?></span>
                     </a>
+                    <?php endif;?>
                     <a href="<?php echo site_url('payments/form'); ?>" class="btn btn-default">
                         <i class="fa fa-credit-card fa-margin"></i>
                         <span class="hidden-xs"><?php _trans('enter_payment'); ?></span>
@@ -62,6 +68,35 @@
             </div>
 
         </div>
+        <div class="col-xs-12 col-md-6">
+
+            <div id="panel-service-overview" class="panel panel-default overview">
+
+                <div class="panel-heading">
+                    <b><i class="fa fa-bar-chart fa-margin"></i> <?php _trans('service_overview'); ?></b>
+                    <span class="pull-right text-muted"><?php echo lang($service_status_period); ?></span>
+                </div>
+
+                <table class="table table-bordered table-condensed no-margin">
+                    <?php foreach ($service_status_totals as $total) { ?>
+                        <tr>
+                            <td>
+                                <a href="<?php echo site_url($total['href']); ?>">
+                                    <?php echo $total['label']; ?>
+                                </a>
+                            </td>
+                            <td class="amount">
+                        <span class="<?php echo $total['class']; ?>">
+                            <?php echo format_currency($total['sum_total']); ?>
+                        </span>
+                            </td>
+                        </tr>
+                    <?php } ?>
+                </table>
+            </div>
+
+        </div>
+        <?php if (get_setting('invoices_enabled', '1') == 1) : ?>
         <div class="col-xs-12 col-md-6">
 
             <div id="panel-invoice-overview" class="panel panel-default overview">
@@ -109,6 +144,7 @@
             <?php } ?>
 
         </div>
+        <?php endif;?>
     </div>
 
     <div class="row">
@@ -171,6 +207,66 @@
             </div>
 
         </div>
+        <div class="col-xs-12 col-md-6">
+
+            <div id="panel-recent-services" class="panel panel-default">
+
+                <div class="panel-heading">
+                    <b><i class="fa fa-history fa-margin"></i> <?php _trans('recent_services'); ?></b>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped table-condensed no-margin">
+                        <thead>
+                        <tr>
+                            <th><?php _trans('status'); ?></th>
+                            <th style="min-width: 15%;"><?php _trans('due_date'); ?></th>
+                            <th style="min-width: 15%;"><?php _trans('service'); ?></th>
+                            <th style="min-width: 35%;"><?php _trans('client'); ?></th>
+                            <th style="text-align: right;"><?php _trans('balance'); ?></th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php foreach ($services as $service) { ?>
+                            <tr>
+                                <td>
+                                <span class="label
+                                <?php echo $service_statuses[$service->service_status_id]['class']; ?>">
+                                    <?php echo $service_statuses[$service->service_status_id]['label']; ?>
+                                </span>
+                                </td>
+                                <td>
+                                    <?php echo date_from_mysql($service->service_date_expires); ?>
+                                </td>
+                                <td>
+                                    <?php echo anchor('services/view/' . $service->service_id, ($service->service_number ? $service->service_number : $service->service_id)); ?>
+                                </td>
+                                <td>
+                                    <?php echo anchor('clients/view/' . $service->client_id, htmlsc(format_client($service))); ?>
+                                </td>
+                                <td class="amount">
+                                    <?php echo format_currency($service->service_total); ?>
+                                </td>
+                                <td style="text-align: center;">
+                                    <a href="<?php echo site_url('services/generate_pdf/' . $service->service_id); ?>"
+                                       title="<?php _trans('download_pdf'); ?>">
+                                        <i class="fa fa-file-pdf-o"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        <?php } ?>
+                        <tr>
+                            <td colspan="6" class="text-right small">
+                                <?php echo anchor('services/status/all', trans('view_all')); ?>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+        <?php if (get_setting('invoices_enabled', '1') == 1) : ?>
         <div class="col-xs-12 col-md-6">
 
             <div id="panel-recent-invoices" class="panel panel-default">
@@ -252,6 +348,7 @@
             </div>
 
         </div>
+        <?php endif;?>
     </div>
 
     <?php if (get_setting('projects_enabled') == 1) : ?>

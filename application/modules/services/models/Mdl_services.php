@@ -86,6 +86,12 @@ class Mdl_Services extends Response_Model
     {
         $this->db->order_by('ip_services.service_id DESC');
     }
+    public function due_date_order_by($limit=10,$order='DESC')
+    {
+        /*$this->
+        $this->db->limit($limit);
+        $this->db->order_by('ip_services.service_date_expires '.$order);*/
+    }
 
     public function default_join()
     {
