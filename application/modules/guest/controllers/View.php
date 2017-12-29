@@ -289,6 +289,29 @@ class View extends Base_Controller
             generate_quote_pdf($quote->quote_id, $stream, $quote_template);
         }
     }
+    /**
+     * @param $service_url_key
+     * @param bool $stream
+     * @param null $service_template
+     */
+    public function generate_service_pdf($service_url_key, $stream = true, $service_template = null)
+    {
+        $this->load->model('services/mdl_services');
+
+        $service = $this->mdl_services->guest_visible()->where('service_url_key', $service_url_key)->get();
+
+        if ($service->num_rows() == 1) {
+            $service = $service->row();
+
+            if (!$service_template) {
+                $service_template = get_setting('pdf_service_template');
+            }
+
+            $this->load->helper('pdf');
+
+            generate_service_pdf($service->service_id, $stream, $service_template);
+        }
+    }
 
     /**
      * @param $quote_url_key
