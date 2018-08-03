@@ -1,6 +1,11 @@
-/* =============================================================================
-   InvoicePlane
-   Custom Stylesheet
+.btn-bigs {
+}
 
-   All changes made in this file will override the default styles.
-   ========================================================================== */
+.btn-bigs .btn {
+    font-size: 5em;
+    margin-bottom: 10px;
+}
+
+.btn-bigs .btn:last-child {
+    margin-right: 0;
+}

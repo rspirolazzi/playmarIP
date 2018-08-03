@@ -26,25 +26,25 @@ class Mdl_Services extends Response_Model
     {
         return array(
             '1' => array(
-                'label' => trans('draft'),
+                'label' => trans('pending'),
                 'class' => 'draft',
                 'href' => 'services/status/draft'
             ),
-            '2' => array(
+            /*'2' => array(
                 'label' => trans('sent'),
                 'class' => 'sent',
                 'href' => 'services/status/sent'
-            ),
+            ),*/
             '4' => array(
-                'label' => trans('approved'),
+                'label' => trans('finished'),
                 'class' => 'approved',
                 'href' => 'services/status/approved'
             ),
-            '5' => array(
+            /*'5' => array(
                 'label' => trans('rejected'),
                 'class' => 'rejected',
                 'href' => 'services/status/rejected'
-            ),
+            ),*/
             '6' => array(
                 'label' => trans('canceled'),
                 'class' => 'canceled',

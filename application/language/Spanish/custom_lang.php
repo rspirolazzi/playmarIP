@@ -20,4 +20,6 @@ $lang = array(
     'view_services' => 'Ver Reparaciones',
     'enable_invoices' => 'Habilitar Facturación',
     'service_overview' => 'Resumen de reparaciones',
+    'pending'=>'Pendiente',
+    'finished'=>'Finalizado',
 );
