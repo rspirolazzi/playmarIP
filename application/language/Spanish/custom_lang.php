@@ -13,5 +13,11 @@
  */
 
 $lang = array(
-
+    'service_date' => 'Fecha de Reparación',
+    'service' => 'Reparación',
+    'services' => 'Reparaciones',
+    'create_service' => 'Crear Reparación',
+    'view_services' => 'Ver Reparaciones',
+    'enable_invoices' => 'Habilitar Facturación',
+    'service_overview' => 'Resumen de reparaciones',
 );
