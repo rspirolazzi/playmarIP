@@ -5,7 +5,7 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
  * InvoicePlane
  *
  * @author		InvoicePlane Developers & Contributors
- * @copyright	Copyright (c) 2012 - 2017 InvoicePlane.com
+ * @copyright	Copyright (c) 2012 - 2018 InvoicePlane.com
  * @license		https://invoiceplane.com/license.txt
  * @link		https://invoiceplane.com
  */
@@ -182,7 +182,7 @@ function generate_invoice_sumex($invoice_id, $stream = true, $client = false)
             return;
         }
 
-        $filePath = UPLOADS_FOLDER . 'temp/' . $filename . '.pdf';
+        $filePath = UPLOADS_TEMP_FOLDER . $filename . '.pdf';
         $pdf->Output($filePath, 'F');
         return $filePath;
     } else {
@@ -190,7 +190,7 @@ function generate_invoice_sumex($invoice_id, $stream = true, $client = false)
             return $sumexPDF;
         }
 
-        $filePath = UPLOADS_FOLDER . 'temp/' . $filename . '.pdf';
+        $filePath = UPLOADS_TEMP_FOLDER . $filename . '.pdf';
         file_put_contents($filePath, $sumexPDF);
         return $filePath;
     }
@@ -202,7 +202,9 @@ function generate_invoice_sumex($invoice_id, $stream = true, $client = false)
  * @param $quote_id
  * @param bool $stream
  * @param null $quote_template
+ *
  * @return string
+ * @throws \Mpdf\MpdfException
  */
 function generate_quote_pdf($quote_id, $stream = true, $quote_template = null)
 {
@@ -255,67 +257,4 @@ function generate_quote_pdf($quote_id, $stream = true, $quote_template = null)
     $CI->load->helper('mpdf');
 
     return pdf_create($html, trans('quote') . '_' . str_replace(array('\\', '/'), '_', $quote->quote_number), $stream, $quote->quote_password);
-}
-
-
-
-/**
- * Generate the PDF for a service
- *
- * @param $service_id
- * @param bool $stream
- * @param null $service_template
- * @return string
- */
-function generate_service_pdf($service_id, $stream = true, $service_template = null)
-{
-    $CI = &get_instance();
-
-    $CI->load->model('services/mdl_services');
-    $CI->load->model('services/mdl_service_items');
-    $CI->load->model('services/mdl_service_tax_rates');
-    $CI->load->model('custom_fields/mdl_custom_fields');
-    $CI->load->helper('country');
-    $CI->load->helper('client');
-
-    $service = $CI->mdl_services->get_by_id($service_id);
-
-    // Override language with system language
-    set_language($service->client_language);
-
-    if (!$service_template) {
-        $service_template = $CI->mdl_settings->setting('pdf_service_template');
-    }
-
-    // Determine if discounts should be displayed
-    $items = $CI->mdl_service_items->where('service_id', $service_id)->get()->result();
-
-    $show_item_discounts = false;
-    foreach ($items as $item) {
-        if ($item->item_discount != '0.00') {
-            $show_item_discounts = true;
-        }
-    }
-
-    // Get all custom fields
-    $custom_fields = array(
-        'service' => $CI->mdl_custom_fields->get_values_for_fields('mdl_service_custom', $service->service_id),
-        'client' => $CI->mdl_custom_fields->get_values_for_fields('mdl_client_custom', $service->client_id),
-        'user' => $CI->mdl_custom_fields->get_values_for_fields('mdl_user_custom', $service->user_id),
-    );
-
-    $data = array(
-        'service' => $service,
-        'service_tax_rates' => $CI->mdl_service_tax_rates->where('service_id', $service_id)->get()->result(),
-        'items' => $items,
-        'output_type' => 'pdf',
-        'show_item_discounts' => $show_item_discounts,
-        'custom_fields' => $custom_fields,
-    );
-
-    $html = $CI->load->view('service_templates/pdf/' . $service_template, $data, true);
-
-    $CI->load->helper('mpdf');
-
-    return pdf_create($html, trans('service') . '_' . str_replace(array('\\', '/'), '_', $service->service_number), $stream);
 }

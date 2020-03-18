@@ -60,7 +60,6 @@
                     'invoice' => Mdl_invoice_custom::$positions,
                     'payment' => Mdl_payment_custom::$positions,
                     'quote' => Mdl_quote_custom::$positions,
-                    'service' => Mdl_service_custom::$positions,
                     'user' => Mdl_user_custom::$positions,
                 );
 

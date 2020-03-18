@@ -5,7 +5,7 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
  * InvoicePlane
  *
  * @author		InvoicePlane Developers & Contributors
- * @copyright	Copyright (c) 2012 - 2017 InvoicePlane.com
+ * @copyright	Copyright (c) 2012 - 2018 InvoicePlane.com
  * @license		https://invoiceplane.com/license.txt
  * @link		https://invoiceplane.com
  */
@@ -209,64 +209,6 @@ class View extends Base_Controller
     }
 
     /**
-     * @param $service_url_key
-     */
-    public function service($service_url_key = '')
-    {
-        if (!$service_url_key) {
-            show_404();
-        }
-
-        $this->load->model('services/mdl_services');
-
-        $service = $this->mdl_services->guest_visible()->where('service_url_key', $service_url_key)->get();
-
-        if ($service->num_rows() != 1) {
-            show_404();
-        }
-
-        $this->load->model('services/mdl_service_items');
-        $this->load->model('services/mdl_service_tax_rates');
-
-        $service = $service->row();
-
-        if ($this->session->userdata('user_type') <> 1 and $service->service_status_id == 2) {
-            $this->mdl_services->mark_viewed($service->service_id);
-        }
-
-        // Attachments
-        $attachments = $this->get_attachments($service_url_key);
-        /*$path = '/uploads/customer_files';
-        $files = scandir(getcwd() . $path);
-        $attachments = array();
-
-        if ($files !== false) {
-            foreach ($files as $file) {
-                if ('.' != $file && '..' != $file && strpos($file, $service_url_key) !== false) {
-                    $obj['name'] = substr($file, strpos($file, '_', 1) + 1);
-                    $obj['fullname'] = $file;
-                    $obj['size'] = filesize($path . '/' . $file);
-                    $obj['fullpath'] = base_url($path . '/' . $file);
-                    $attachments[] = $obj;
-                }
-            }
-        }*/
-
-        $is_expired = (strtotime($service->service_date_expires) < time() ? true : false);
-
-        $data = array(
-            'service' => $service,
-            'items' => $this->mdl_service_items->where('service_id', $service->service_id)->get()->result(),
-            'service_tax_rates' => $this->mdl_service_tax_rates->where('service_id', $service->service_id)->get()->result(),
-            'service_url_key' => $service_url_key,
-            'flash_message' => $this->session->flashdata('flash_message'),
-            'is_expired' => $is_expired,
-            'attachments' => $attachments,
-        );
-
-        $this->load->view('service_templates/public/' . get_setting('public_service_template') . '.php', $data);
-    }
-    /**
      * @param $quote_url_key
      * @param bool $stream
      * @param null $quote_template
@@ -287,29 +229,6 @@ class View extends Base_Controller
             $this->load->helper('pdf');
 
             generate_quote_pdf($quote->quote_id, $stream, $quote_template);
-        }
-    }
-    /**
-     * @param $service_url_key
-     * @param bool $stream
-     * @param null $service_template
-     */
-    public function generate_service_pdf($service_url_key, $stream = true, $service_template = null)
-    {
-        $this->load->model('services/mdl_services');
-
-        $service = $this->mdl_services->guest_visible()->where('service_url_key', $service_url_key)->get();
-
-        if ($service->num_rows() == 1) {
-            $service = $service->row();
-
-            if (!$service_template) {
-                $service_template = get_setting('pdf_service_template');
-            }
-
-            $this->load->helper('pdf');
-
-            generate_service_pdf($service->service_id, $stream, $service_template);
         }
     }
 

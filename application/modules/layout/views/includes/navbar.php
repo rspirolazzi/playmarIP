@@ -36,18 +36,7 @@
                         <li><?php echo anchor('quotes/index', trans('view_quotes')); ?></li>
                     </ul>
                 </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-caret-down"></i> &nbsp;
-                        <span class="hidden-md"><?php _trans('services'); ?></span>
-                        <i class="visible-md-inline fa fa-file"></i>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="#" class="create-service"><?php _trans('create_service'); ?></a></li>
-                        <li><?php echo anchor('services/index', trans('view_services')); ?></li>
-                    </ul>
-                </li>
-                <?php if (get_setting('invoices_enabled', '1') == 1) : ?>
+
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-caret-down"></i> &nbsp;
@@ -60,7 +49,6 @@
                         <li><?php echo anchor('invoices/recurring/index', trans('view_recurring_invoices')); ?></li>
                     </ul>
                 </li>
-                <?php endif;?>
 
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -71,6 +59,7 @@
                     <ul class="dropdown-menu">
                         <li><?php echo anchor('payments/form', trans('enter_payment')); ?></li>
                         <li><?php echo anchor('payments/index', trans('view_payments')); ?></li>
+                        <li><?php echo anchor('payments/online_logs', trans('view_payment_logs')); ?></li>
                     </ul>
                 </li>
 
@@ -108,9 +97,7 @@
                         <i class="visible-md-inline fa fa-bar-chart"></i>
                     </a>
                     <ul class="dropdown-menu">
-                        <?php if (get_setting('invoices_enabled', '1') == 1) : ?>
                         <li><?php echo anchor('reports/invoice_aging', trans('invoice_aging')); ?></li>
-                        <?php endif;?>
                         <li><?php echo anchor('reports/payment_history', trans('payment_history')); ?></li>
                         <li><?php echo anchor('reports/sales_by_client', trans('sales_by_client')); ?></li>
                         <li><?php echo anchor('reports/sales_by_year', trans('sales_by_date')); ?></li>
@@ -149,10 +136,8 @@
                     <ul class="dropdown-menu">
                         <li><?php echo anchor('custom_fields/index', trans('custom_fields')); ?></li>
                         <li><?php echo anchor('email_templates/index', trans('email_templates')); ?></li>
-                        <?php if (get_setting('invoices_enabled', '1') == 1) : ?>
                         <li><?php echo anchor('invoice_groups/index', trans('invoice_groups')); ?></li>
                         <li><?php echo anchor('invoices/archive', trans('invoice_archive')); ?></li>
-                        <?php endif;?>
                         <!-- // temporarily disabled
                         <li><?php echo anchor('item_lookups/index', trans('item_lookups')); ?></li>
                         -->
